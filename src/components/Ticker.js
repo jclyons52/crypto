@@ -14,13 +14,19 @@ export default class Ticker extends Component {
 
     constructor() {
         super();
+        store.dispatch(ticker.fetchTickers());
     }
 
     renderTickers() {
-        return this.props.tickers.map((ticker) => {
+        console.log(this.props);
+        return this.props.tickers.tickers.map((ticker) => {
             return (
-                <tr>
+                <tr key={ticker.timestamp}>
                     <td>{ticker.base}</td>
+                    <td>{ticker.target}</td>
+                    <td>{ticker.price}</td>
+                    <td>{ticker.volume}</td>
+                    <td>{ticker.change}</td>
                 </tr>
             )
         })
@@ -29,7 +35,16 @@ export default class Ticker extends Component {
     render() {
         return (
             <table className="table">
-                {this.renderTickers}
+            <th>
+             
+                    <td>ticker</td>
+                    <td>ticker</td>
+                    <td>ticker</td>
+                    <td>ticker</td>
+                    <td>ticker</td>
+                
+            </th>
+                {this.renderTickers()}
             </table>
         )
     }

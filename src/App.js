@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import Ticker from './components/Ticker.js'
 class App extends Component {
   render() {
     return (
@@ -11,6 +11,10 @@ class App extends Component {
           <h2>Welcome to Crypto</h2>
         </div>
         <p className="App-intro">
+        <div className="container">
+        <Ticker></Ticker>
+        </div>
+        
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
       </div>
