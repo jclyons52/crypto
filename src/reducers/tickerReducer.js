@@ -9,7 +9,7 @@ const initialState = {
     error: null
 }
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
     console.log(action);
     switch (action.type) {
         case "LOAD_TICKER_PENDING": {
@@ -24,23 +24,31 @@ export default function(state = initialState, action) {
                 ...state,
                 fetching: false,
                 fetched: true,
-                tickers: [
-                    {
-                        ...action.payload.data.ticker,
-                    timestamp: action.payload.data.timestamp
-                    }
-                ]
+                tickers: getTickers(state, action)
             }
         }
         case "LOAD_TICKER_REJECTED": {
-        return {
+            return {
                 ...state,
-            fetching: false,
-            error: action.payload
+                fetching: false,
+                error: action.payload
+            }
+        }
+        default: {
+            return state;
         }
     }
-        default: {
-        return state;
-    }
 }
+
+function getTickers(state, action) {
+    const newTicker = {
+        ...action.payload.data.ticker,
+        timestamp: action.payload.data.timestamp
+    }
+    let tickers = state.tickers.filter((ticker) => {
+         return ticker.base !== newTicker.base || ticker.target !== newTicker.target
+    })
+
+    tickers.push(newTicker);
+    return tickers;
 }
