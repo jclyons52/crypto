@@ -3,6 +3,7 @@ import store from "../store";
 import * as ticker from "../actions/tickerActions";
 import { connect } from "react-redux";
 import CreateTickerForm from "./CreateTickerForm";
+
 @connect((store) => {
   return {
     tickers: store.tickers

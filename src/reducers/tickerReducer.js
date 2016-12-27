@@ -3,7 +3,11 @@ const initialState = {
     fetched: false,
     tickers: [
         {
-            "base": "BTC", "target": "USD", "price": "443.7807865468", "volume": "31720.1493969300", "change": "0.3766203596"
+            "base": "BTC",
+            "target": "USD",
+            "price": "443.7807865468",
+            "volume": "31720.1493969300",
+            "change": "0.3766203596"
         }
     ],
     error: null
@@ -13,26 +17,20 @@ export default function (state = initialState, action) {
     console.log(action);
     switch (action.type) {
         case "LOAD_TICKER_PENDING": {
-            return {
-               ...state,
-                fetching: true
-            }
+            return Object.assign({}, state, {fetching: true});
         }
         case "LOAD_TICKER_FULFILLED": {
-
-            return {
-                ...state,
+            return Object.assign({}, state, {
                 fetching: false,
                 fetched: true,
                 tickers: getTickers(state, action)
-            }
+            })
         }
         case "LOAD_TICKER_REJECTED": {
-            return {
-                ...state,
+            return Object.assign({}, state, {
                 fetching: false,
                 error: action.payload
-            }
+            });
         }
         default: {
             return state;
@@ -41,10 +39,10 @@ export default function (state = initialState, action) {
 }
 
 function getTickers(state, action) {
-    const newTicker = {
-        ...action.payload.data.ticker,
+    const newTicker = Object.assign({}, action.payload.data.ticker, {
         timestamp: action.payload.data.timestamp
-    }
+    })
+    
     let tickers = state.tickers.filter((ticker) => {
          return ticker.base !== newTicker.base || ticker.target !== newTicker.target
     })
