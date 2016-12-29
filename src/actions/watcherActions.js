@@ -2,7 +2,8 @@ import store from "../store";
 import _ from "lodash";
 import {fetchTickers} from "./tickerActions";
 
-const throttledUpdate = _.throttle(() => updateWatchers(), 10000);
+let count = 4000;
+const throttledUpdate = _.throttle(() => updateWatchers(), 2000);
 
 export function addWatcher(from, to) {
     const watchers = store.getState().watchers.watchers;
@@ -24,8 +25,13 @@ export function removeWatcher(from, to) {
     }
 }
 
-export function startWatchers() {
-     setTimeout(throttledUpdate, 11000)
+export function startWatchers(delay) {
+
+     setTimeout(throttledUpdate, count)
+     if (count < 60000) {
+       count = 4000 * count;
+       const throttledUpdate = _.throttle(() => updateWatchers(), (count / 2));
+     }
 }
 
 export function updateWatchers() {
@@ -33,4 +39,5 @@ export function updateWatchers() {
     watchers.forEach((watcher) => {
         store.dispatch(fetchTickers(watcher.from, watcher.to))
     })
+    startWatchers(watchers.length);
 }

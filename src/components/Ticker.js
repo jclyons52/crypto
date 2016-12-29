@@ -3,6 +3,7 @@ import store from "../store";
 import * as tickerActions from "../actions/tickerActions";
 import * as watcherActions from "../actions/watcherActions";
 import { connect } from "react-redux";
+import { Line } from "react-chartjs";
 
 @connect((store) => {
   return {
@@ -26,11 +27,11 @@ export default class Ticker extends Component {
   }
 
   graphValues(list) {
-    return list.map((ticker) => {
-      return (
-        <li key={ticker.timestamp} >{ticker.price}</li>
-      )
+    const prices = list.map((ticker) => {
+      return ticker.price;
     })
+    const data = this.getChartInfo(prices);
+    return (<Line data={data.data} options={data.options} width="600" height="250"/>)
   }
 
   getTickers() {
@@ -48,5 +49,20 @@ export default class Ticker extends Component {
       store.dispatch(tickerActions.fetchTickers(base, target));
     }
     return [];
+  }
+
+  getChartInfo(data) {
+    return {
+    data: {
+        labels: data,
+        datasets: [{
+            label: 'Price',
+            data: data,
+        }]
+    },
+   options: {
+        responsive: false
+    }
+}
   }
 }
