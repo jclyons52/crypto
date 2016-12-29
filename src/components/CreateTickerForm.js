@@ -25,7 +25,7 @@ export default class CreateTickerForm extends Component {
   }
 
   handleSubmit(event) {
-    store.dispatch(ticker.fetchTickers(this.state.from, this.state.to));
+    ticker.addWatcher(this.state.from, this.state.to);
     event.preventDefault();
   }
 

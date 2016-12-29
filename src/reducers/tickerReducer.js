@@ -1,30 +1,27 @@
+import _ from "lodash"
+
 const initialState = {
     fetching: false,
     fetched: false,
-    tickers: [
+    watchers: [
         {
-            "base": "BTC",
-            "target": "USD",
-            "price": "443.7807865468",
-            "volume": "31720.1493969300",
-            "change": "0.3766203596"
+            to: "USD",
+            from: "BTC"
         }
     ],
+    latest: [],
+    sorted: {},
     error: null
 }
 
 export default function (state = initialState, action) {
-    console.log(action);
     switch (action.type) {
         case "LOAD_TICKER_PENDING": {
-            return Object.assign({}, state, {fetching: true});
+            return Object.assign({}, state, { fetching: true });
         }
         case "LOAD_TICKER_FULFILLED": {
-            return Object.assign({}, state, {
-                fetching: false,
-                fetched: true,
-                tickers: getTickers(state, action)
-            })
+            return addTicker(state, action);
+
         }
         case "LOAD_TICKER_REJECTED": {
             return Object.assign({}, state, {
@@ -32,21 +29,72 @@ export default function (state = initialState, action) {
                 error: action.payload
             });
         }
+        case "ADD_WATCHER": {
+            state.watchers.push(action.payload);
+            return Object.assign({}, state);
+        }
+        case "REMOVE_WATCHER": {
+            return filterWatchers(state, action);
+        }
         default: {
             return state;
         }
     }
 }
 
-function getTickers(state, action) {
+function filterWatchers(state, action) {
+    const watchers = state.watchers.filter((watcher) => {
+        return watcher.from !== action.payload.from || watcher.to !== action.payload.to;
+    })
+    delete state.sorted[action.payload.from + action.payload.to]
+    const latest = uniqueTickers(state.sorted);
+    return Object.assign({}, state, { watchers, latest });
+}
+
+function addTicker(state, action) {
     const newTicker = Object.assign({}, action.payload.data.ticker, {
         timestamp: action.payload.data.timestamp
     })
-    
-    let tickers = state.tickers.filter((ticker) => {
-         return ticker.base !== newTicker.base || ticker.target !== newTicker.target
+    const tickers = getTickers(state.sorted, newTicker)
+    return Object.assign({}, state, {
+        fetching: false,
+        fetched: true,
+        latest: tickers.latest,
+        sorted: tickers.sorted
+    })
+}
+
+function getTickers(tickers, newTicker) {
+    const sorted = sortTickers(tickers, newTicker);
+    const latest = uniqueTickers(sorted);
+    return { latest, sorted };
+}
+
+/**
+ * Sorts tickers by their base and target currencies
+ */
+function sortTickers(final, current) {
+    const key = current.base + current.target;
+    let val = final[key];
+    if (val === undefined) {
+        val = [];
+    }
+    val.push(current);
+    final[key] = val;
+    return final;
+}
+
+/**
+ * takes the newest ticker for each conversion type
+ */
+function uniqueTickers(tickerMap = {}) {
+    let final = [];
+    _.forEach(tickerMap, (val) => {
+        let newest = val.reduce((newest, ticker) => {
+            return ticker.timestamp > newest.timestamp ? ticker : newest
+        }, { timestamp: 0 });
+        final.push(newest)
     })
 
-    tickers.push(newTicker);
-    return tickers;
+    return final;
 }

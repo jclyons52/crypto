@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import TickerList from './components/TickerList.js'
+
 class App extends Component {
   render() {
     return (
@@ -9,11 +8,11 @@ class App extends Component {
         <div className="App-header">
           <h2>Welcome to Crypto</h2>
         </div>
-        <p className="App-intro">
         <div className="container">
-        <TickerList></TickerList>
+        <div className="detail">
+          {this.props.children}
         </div>
-        </p>
+        </div>
       </div>
     );
   }
