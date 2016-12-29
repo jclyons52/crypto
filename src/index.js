@@ -5,8 +5,9 @@ import Ticker from './components/Ticker';
 import './index.css';
 import { Provider } from "react-redux";
 import store from "./store";
-import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import { Router, Route, hashHistory, browserHistory, IndexRoute } from 'react-router'
 import TickerList from './components/TickerList.js'
+import CreateTickerForm from "./components/CreateTickerForm";
 import * as watcherActions from "./actions/watcherActions";
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
      <Router history={browserHistory}>
       <Route path="/" component={App}>
       <IndexRoute component={TickerList} />
+      <Route path="tickers/create" component={CreateTickerForm}/>
        <Route path="tickers/:base/:target" component={Ticker}/>
       </Route>
     </Router>

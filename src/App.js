@@ -1,20 +1,60 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
+import 'admin-lte/dist/css/AdminLTE.min.css';
+import 'admin-lte/dist/css/skins/_all-skins.min.css';
 import { Link } from 'react-router'
+import { AdminLTE, Header, Sidebar, HeaderLogo } from './components/adminlte';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebarCollapse: false,
+      sidebarMini: true,
+    };
+    this._sidebarToggle = this.sidebarToggle.bind(this);
+  }
+
+  sidebarToggle() {
+    this.setState({
+      sidebarCollapse: !this.state.sidebarCollapse,
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to Crypto</h2>
-          <Link to="/" className="btn btn-default" >view</Link>
-        </div>
-        <div className="container">
-        <div className="detail">
-          {this.props.children}
-        </div>
-        </div>
+      <div>
+        <AdminLTE
+          layout="fixed"
+          sidebarCollapsed={this.state.sidebarCollapse}
+          sidebarMini={this.state.sidebarMini}
+          skin="blue"
+          >
+
+          <Header
+            sidebarToggle={this._sidebarToggle}
+            >
+            
+          </Header>
+          <Sidebar>
+            <Sidebar.Menu title="MAIN NAVIGATION">
+              <Sidebar.Menu.Item
+                link="/"
+                title="Tickers"
+                />
+            </Sidebar.Menu>
+          </Sidebar>
+          <div className="content-wrapper">
+
+            <section className="content">
+              {this.props.children}
+            </section>
+          </div>
+
+
+        </AdminLTE>
       </div>
     );
   }

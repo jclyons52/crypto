@@ -4,7 +4,7 @@ import * as watcherActions from "../actions/watcherActions";
 import Select from 'react-select';
 import CryptoCurrencies from '../enums/CryptoCurrencies';
 import Currencies from '../enums/Currencies';
-
+import { Link } from "react-router"
 // Be sure to include styles at some point, probably during your bootstrapping
 import 'react-select/dist/react-select.css';
 
@@ -33,6 +33,7 @@ export default class CreateTickerForm extends Component {
   handleSubmit(event) {
     watcherActions.addWatcher(this.state.from, this.state.to);
     event.preventDefault();
+    this.props.history.push('/');
   }
 
   render() {
@@ -55,7 +56,16 @@ export default class CreateTickerForm extends Component {
             onChange={this.handleToChange}
             />
         </div>
-        <input type="submit" value="Submit" className="btn btn-default" />
+        <div className="row">
+          <div className="col-xs-1">
+            <input type="submit" value="Submit" className="btn btn-primary" />
+          </div>
+          <div className="col-xs-2">
+            <Link to='/' className='btn btn-default'>Back</Link>
+          </div>
+
+
+        </div>
       </form>
     );
   }
