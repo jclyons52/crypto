@@ -24,15 +24,15 @@ export default class TickerList extends Component {
     return tickers.map((ticker) => {
       const link = `/tickers/${ticker.base}/${ticker.target}`;
       return (
-        <tr key={ticker.timestamp}>
+        <tr key={Math.random()}>
           <td>{ticker.base}</td>
           <td>{ticker.target}</td>
           <td>{ticker.price}</td>
           <td>{ticker.volume}</td>
           <td>{ticker.change}</td>
           <td>
-          <Link to={link}>view</Link>
-          <button onClick={this.removeWatcher.bind(this, ticker)}>Remove</button>
+          <Link to={link} className="btn btn-default" >view</Link>
+          <button onClick={this.removeWatcher.bind(this, ticker)} className="btn btn-default" >Remove</button>
           </td>
 
         </tr>

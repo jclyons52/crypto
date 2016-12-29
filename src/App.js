@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Link } from 'react-router'
 
 class App extends Component {
   render() {
@@ -7,6 +8,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>Welcome to Crypto</h2>
+          <Link to="/" className="btn btn-default" >view</Link>
         </div>
         <div className="container">
         <div className="detail">

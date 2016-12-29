@@ -1,46 +1,61 @@
 import React, { Component } from 'react';
 import store from "../store";
-import * as ticker from "../actions/tickerActions";
+import * as watcherActions from "../actions/watcherActions";
+import Select from 'react-select';
+import CryptoCurrencies from '../enums/CryptoCurrencies';
+import Currencies from '../enums/Currencies';
+
+// Be sure to include styles at some point, probably during your bootstrapping
+import 'react-select/dist/react-select.css';
 
 export default class CreateTickerForm extends Component {
-   constructor(props) {
+  constructor(props) {
     super(props);
-    this.state = {from: '', to: ''};
+    this.state = { from: '', to: '' };
 
     this.handleFromChange = this.handleFromChange.bind(this);
     this.handleToChange = this.handleToChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleFromChange(event) {
+  handleFromChange(option) {
     this.setState({
-      from: event.target.value
+      from: option.value
     });
   }
 
-  handleToChange(event) {
+  handleToChange(option) {
     this.setState({
-      to: event.target.value
+      to: option.value
     });
   }
 
   handleSubmit(event) {
-    ticker.addWatcher(this.state.from, this.state.to);
+    watcherActions.addWatcher(this.state.from, this.state.to);
     event.preventDefault();
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          From:
-          <input type="text" value={this.state.from} onChange={this.handleFromChange} />
-        </label>
-        <label>
-          To:
-          <input type="text" value={this.state.to} onChange={this.handleToChange} />
-        </label>
-        <input type="submit" value="Submit" />
+        <div className="form-group">
+          <label>From:</label>
+          <Select
+            value={this.state.from}
+            options={CryptoCurrencies}
+            onChange={this.handleFromChange}
+            />
+
+        </div>
+        <div className="form-group">
+          <label>To:</label>
+          <Select
+            value={this.state.to}
+            options={Currencies}
+            onChange={this.handleToChange}
+            />
+        </div>
+        <input type="submit" value="Submit" className="btn btn-default" />
       </form>
     );
   }
