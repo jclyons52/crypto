@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from "../store";
-import * as tickerActions from "../actions/tickerActions";
+import * as watcherActions from "../actions/watcherActions";
 import { connect } from "react-redux";
 import CreateTickerForm from "./CreateTickerForm";
 import { Link } from 'react-router'
@@ -15,7 +15,7 @@ export default class TickerList extends Component {
 
   constructor() {
     super();
-    tickerActions.updateWatchers();
+    watcherActions.updateWatchers();
   }
 
   renderTickers() {
@@ -41,7 +41,7 @@ export default class TickerList extends Component {
   }
 
   removeWatcher(ticker) {
-    store.dispatch(tickerActions.removeWatcher(ticker.base, ticker.target))
+    store.dispatch(watcherActions.removeWatcher(ticker.base, ticker.target))
   }
 
   render() {

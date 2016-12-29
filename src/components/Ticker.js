@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import store from "../store";
 import * as tickerActions from "../actions/tickerActions";
+import * as watcherActions from "../actions/watcherActions";
 import { connect } from "react-redux";
 
 @connect((store) => {
   return {
     tickers: store.tickers.sorted,
-    watchers: store.tickers.watchers,
+    watchers: store.watchers.watchers,
     fetching: store.tickers.fetching
   }
 })
@@ -27,7 +28,7 @@ export default class Ticker extends Component {
   graphValues(list) {
     return list.map((ticker) => {
       return (
-        <li>{ticker.price}</li>
+        <li key={ticker.timestamp} >{ticker.price}</li>
       )
     })
   }
@@ -37,7 +38,7 @@ export default class Ticker extends Component {
     const target = this.props.params.target;
     const tickers = this.props.tickers[base + target];
     if (this.props.watchers.filter(watcher => watcher.from === base && watcher.to === target ).length < 1) {
-      tickerActions.addWatcher(base, target);
+      watcherActions.addWatcher(base, target);
     }
     if(tickers !== undefined) {
       return tickers;

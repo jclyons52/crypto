@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import TickerList from './components/TickerList.js'
-import * as ticker from "./actions/tickerActions";
+import * as watcherActions from "./actions/watcherActions";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -21,4 +21,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-ticker.startWatchers();
+watcherActions.startWatchers();
