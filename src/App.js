@@ -32,17 +32,20 @@ class App extends Component {
           sidebarMini={this.state.sidebarMini}
           skin="blue"
           >
-
           <Header
             sidebarToggle={this._sidebarToggle}
             >
-            
           </Header>
           <Sidebar>
             <Sidebar.Menu title="MAIN NAVIGATION">
               <Sidebar.Menu.Item
                 link="/"
                 title="Tickers"
+                mainIcon="fa-line-chart"
+                />
+            <Sidebar.Menu.Item
+                link="alerts"
+                title="Alerts"
                 />
             </Sidebar.Menu>
           </Sidebar>
@@ -52,8 +55,6 @@ class App extends Component {
               {this.props.children}
             </section>
           </div>
-
-
         </AdminLTE>
       </div>
     );

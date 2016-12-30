@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import { Collapse } from 'react-bootstrap';
 import { Link } from 'react-router';
@@ -17,7 +17,7 @@ import { Link } from 'react-router';
 // green: green
 // none: ---
 
-class SidebarMenuItem extends React.Component {
+class SidebarMenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {

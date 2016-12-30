@@ -11,7 +11,7 @@ export function addWatcher(from, to) {
     if (duplicates > 0) {
         return;
     }
-    store.dispatch(fetchTickers(from, to));
+    fetchTickers(from, to);
     store.dispatch({
         type: "ADD_WATCHER",
         payload: { from, to }
@@ -33,7 +33,7 @@ export function updateWatchers() {
     const state = store.getState();
     const watchers = state.watchers.watchers;
     watchers.forEach((watcher) => {
-        store.dispatch(fetchTickers(watcher.from, watcher.to))
+        fetchTickers(watcher.from, watcher.to)
     })
     startWatchers(watchers.length);
 }
