@@ -2,8 +2,8 @@ import store from "../store";
 import _ from "lodash";
 import {fetchTickers} from "./tickerActions";
 
-let count = 65000;
-let throttledUpdate = _.throttle(() => updateWatchers(), 60000);
+let count = 600000;
+let throttledUpdate = _.throttle(() => updateWatchers(), 600000);
 
 export function addWatcher(from, to) {
     const watchers = store.getState().watchers.watchers;

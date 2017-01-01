@@ -19,6 +19,7 @@ export default function (state = initialState, action) {
       let alert = action.payload;
       alert.dismissed = false;
       alert.active = false;
+      alert.id = Math.random(),
       state.alerts.push(action.payload);
       return Object.assign({}, state);
     }

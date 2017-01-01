@@ -46,6 +46,7 @@ class App extends Component {
             <Sidebar.Menu.Item
                 link="alerts"
                 title="Alerts"
+                mainIcon="fa-bell"
                 />
             </Sidebar.Menu>
           </Sidebar>
