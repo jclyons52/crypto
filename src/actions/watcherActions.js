@@ -19,10 +19,14 @@ export function addWatcher(from, to) {
 }
 
 export function removeWatcher(from, to) {
-    return {
+    store.dispatch({
         type: "REMOVE_WATCHER",
         payload: { from, to }
-    }
+    });
+    store.dispatch({
+        type: "REMOVE_TICKER_TYPE",
+        payload: { from, to }
+    });
 }
 
 export function startWatchers(delay) {

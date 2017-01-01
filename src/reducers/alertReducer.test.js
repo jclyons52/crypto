@@ -59,7 +59,7 @@ it('Removes an alert', () => {
 
 })
 
-it('updates the active status of an alert', () => {
+it('activates an alert', () => {
   const initialState = {
     alerts: [
       {
@@ -93,4 +93,40 @@ it('updates the active status of an alert', () => {
   const finalState = alertReducer(initialState, action);
 
   expect(finalState.alerts[0].active).toBe(true);
+})
+
+it('deactivates an alert', () => {
+  const initialState = {
+    alerts: [
+      {
+        base: "BTC",
+        operation: "GREATER_THAN",
+        limit: 1000,
+        target: "USD",
+        id: Math.random(),
+        active: false,
+        dismissed: false,
+      }
+    ]
+  }
+
+  const action = {
+    type: 'UPDATE_ALERTS',
+    payload: {
+      data: {
+        ticker: {
+          "base": "BTC",
+          "target": "USD",
+          "price": "900.00",
+          "volume": "6.99712284",
+          "change": "-40.61609000",
+          "timestamp": 1483240983,
+        }
+      }
+    }
+  }
+
+  const finalState = alertReducer(initialState, action);
+
+  expect(finalState.alerts[0].active).toBe(false);
 })

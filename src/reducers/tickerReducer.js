@@ -20,8 +20,13 @@ export default function (state = initialState, action) {
         case "LOAD_TICKER_REJECTED": {
             return Object.assign({}, state, {
                 fetching: false,
-                error: action.payload
+                error: action.payload.data.error
             });
+        }
+        case "REMOVE_TICKER_TYPE": {
+            delete state.sorted[action.payload.from + action.payload.to]
+            const latest = uniqueTickers(state.sorted);
+            return Object.assign({}, state, { latest });
         }
         default: {
             return state;

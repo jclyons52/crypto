@@ -97,7 +97,7 @@ export default class Ticker extends Component {
     }
 
     if (this.props.fetching === false) {
-      store.dispatch(tickerActions.fetchTickers(base, target));
+      tickerActions.fetchTickers(base, target);
     }
     return [];
   }

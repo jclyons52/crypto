@@ -41,7 +41,7 @@ export default class TickerList extends Component {
   }
 
   removeWatcher(ticker) {
-    store.dispatch(watcherActions.removeWatcher(ticker.base, ticker.target))
+    watcherActions.removeWatcher(ticker.base, ticker.target)
   }
 
   render() {
