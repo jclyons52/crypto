@@ -58,7 +58,6 @@ handleLimitChange(event) {
   }
 
   handleSubmit(event) {
-    // watcherActions.addWatcher(this.state.base, this.state.target);
     event.preventDefault();
     alertActions.addAlert(this.state);
     alertActions.updateAlerts(store.getState().tickers.latest);
@@ -105,8 +104,6 @@ handleLimitChange(event) {
           <div className="col-xs-2">
             <Link target='/' className='btn btn-default'>Back</Link>
           </div>
-
-
         </div>
       </form>
     );
